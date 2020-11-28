@@ -1,0 +1,11 @@
+{% extends 'hostel/base_home.html' %}
+
+{% block evicted_students %}
+
+    <h4>Выселенные студенты:</h4>
+
+    {% for student in result_list %}
+        <p>{{ student }}</p>
+    {% endfor %}
+
+{% endblock %}

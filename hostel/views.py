@@ -4,6 +4,7 @@ from .models import Student
 from .models import Room
 from .models import CardsFilter
 from .service.stat import Statistics
+from .models import get_evicted_students
 from forms import StudentForm
 from forms import RoomForm
 from forms import FiltersForm
@@ -11,6 +12,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import View
 from django.shortcuts import redirect
+from simple_history.models import HistoricalRecords
+from simple_history.models import ModelChange
 
 # TODO to settings
 logging.basicConfig(level=logging.INFO)
@@ -193,3 +196,24 @@ class CheckInStudentUpdate(View):
             return redirect(new_student)
         return render(request, 'hostel/check_in_update_list.html',
                       context={'bound_form': bound_form, 'student': student})
+
+
+class GetEvictedStudents(View):
+    def get(self, request):
+        records = get_evicted_students()
+        result_list = list()
+
+        for student_history in records:
+            reason = student_history[2]
+            if not reason:
+                reason = ''
+
+            result_list.append({
+                "room": student_history[0],
+                "date": student_history[1].strftime('%d-%m-%Y'),
+                "reason": reason,
+                "name": student_history[3],
+            })
+
+        return render(request, 'hostel/evicted_student.html',
+                      context={'result_dict': result_list})

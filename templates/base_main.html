@@ -17,16 +17,19 @@
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'home_url' %}">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'home_url' %}">Статистика <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'rooms_url' %}">Cards</a>
+                <a class="nav-link" href="{% url 'rooms_url' %}">Проживающие</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'check_in_url' %}">Check In!</a>
+                <a class="nav-link" href="{% url 'check_in_url' %}">Заселение</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{%  url 'add_a_room_url' %}">Add a room!</a>
+                <a class="nav-link" href="{%  url 'add_a_room_url' %}">Добавить комнату</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%  url 'evicted_students_url' %}">Выселенные</a>
             </li>
         </ul>
     </div>
@@ -46,6 +49,9 @@
             {% endblock %}
 
             {% block student_det %}
+            {% endblock %}
+
+            {% block evicted_students %}
             {% endblock %}
         </div>
     </div>

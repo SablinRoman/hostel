@@ -10,4 +10,5 @@ urlpatterns = [
 	path('check-in/', Check_in_student.as_view(), name='check_in_url'),
 	path('rooms/<str:id>/update/', CheckInStudentUpdate.as_view(), name='check_in_update_url'),
 	path('rooms/delete/<str:id>', student_check_out, name='student_check_out_url'),
+	path('evicted_students/', GetEvictedStudents.as_view(), name='evicted_students_url')
 ]

@@ -1,6 +1,8 @@
 import logging
+import datetime
 
 from django.db import models
+from django.db import connection
 from django.shortcuts import reverse
 from simple_history.models import HistoricalRecords
 
@@ -15,7 +17,6 @@ class Student(models.Model):
     SEX_CHOICES = (
         ('М', 'Мужской'),
         ('Ж', 'Женский')
-
     )
 
     BED_STATUS_CHOICES = (
@@ -61,14 +62,12 @@ class Student(models.Model):
     history = HistoricalRecords()
 
     def save_without_historical_record(self, *args, **kwargs):
-        print('save method')
         self.skip_history_when_saving = True
         try:
-            print('try')
             ret = self.save(*args, **kwargs)
         finally:
-            print('finally')
             del self.skip_history_when_saving
+
         return ret
 
     def get_absolute_url(self):
@@ -93,3 +92,19 @@ class CardsFilter(models.Model):
     women = models.BooleanField(blank=True, null=True)
     free = models.BooleanField(blank=True, null=True)
     busy = models.BooleanField(blank=True, null=True)
+
+
+class StudentHistory:
+    # TODO Закончить!
+    def get_evicted_students(self):
+        with connection.cursor() as cursor:
+            cursor.execute('''
+            SELECT room_id, history_date, history_change_reason, name
+                FROM hostel_historicalstudent
+                WHERE history_type = '-'
+            ''')
+            records = cursor.fetchall()
+
+            return records
+
+
