@@ -1,0 +1,48 @@
+{%extends 'hostel/base_home.html'%}
+
+{%block number%}
+    <br>
+
+    <h4>Статистика по комнатам:</h4>
+	<li>Количество проживающих: {{residents}}</li>
+    <li>Количество свободных мужских мест: {{male_places}}</li>
+	<li>Количество свободных женских мест: {{female_places}}</li>
+	<li>Количество мест "занято": {{save_places}}</li>
+	<li>Количество мест "пустое": {{empty_places}}</li>
+    <br>
+
+    <h4>Статистика по гражданству:</h4>
+	{% for key, value in country.items %}
+		<li>
+			{{key}} : {{value}}
+		</li>
+	{% endfor %}
+    <br>
+
+    <h4>Статистика по факультетам:</h4>
+	{% for key, value in faculty.items %}
+		<li>
+			{{key}} : {{value}}
+		</li>
+	{% endfor %}
+    <br>
+
+    <h4>Статистика по формам обучения</h4>
+	{% for key, value in form.items %}
+		<li>
+			{{key}} : {{value}}
+		</li>
+	{% endfor %}
+    <br>
+
+    <h4>Общая статистика</h4>
+	{% for key, value in reg.items %}
+		<li>
+			{{key}} : {{value}}
+		</li>
+	{% endfor %}
+    <br>
+	
+{% endblock %}
+
+

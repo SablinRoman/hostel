@@ -1,0 +1,28 @@
+{% extends 'hostel/base_cards.html' %}
+
+{% block cards %}
+
+<div class="col-sm-6">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{room.room_numb }}</h5>
+
+            {% for student in room.students.all %}
+            <p>
+                <a class="card-text" href="{{student.get_absolute_url}}">{{ student.name }} </a>
+            </p>
+
+            {% if student.name == '' %}
+            <p>
+                <a class="card-text" href="{{student.get_absolute_url}}">{{ student.bed_status }} </a>
+            </p>
+            {% endif %}
+
+            {% endfor %}
+
+            <a href="{{student.room_url}}" class="btn btn-primary">Информация о комнате</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
