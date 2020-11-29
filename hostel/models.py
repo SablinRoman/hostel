@@ -94,17 +94,26 @@ class CardsFilter(models.Model):
     busy = models.BooleanField(blank=True, null=True)
 
 
+def get_evicted_students_from_db():
+    with connection.cursor() as cursor:
+        cursor.execute('''
+        SELECT room_id, history_date, history_change_reason, name
+            FROM hostel_historicalstudent
+            WHERE history_type = '-'
+        ''')
+        records = cursor.fetchall()
+
+        return records
+
+
 class StudentHistory:
-    # TODO Закончить!
-    def get_evicted_students(self):
-        with connection.cursor() as cursor:
-            cursor.execute('''
-            SELECT room_id, history_date, history_change_reason, name
-                FROM hostel_historicalstudent
-                WHERE history_type = '-'
-            ''')
-            records = cursor.fetchall()
 
-            return records
+    def __init__(self, history_records):
+        self.room = history_records[0]
+        self.date = history_records[1].strftime('%d-%m-%Y')
 
-
+        reason = history_records[2]
+        if not reason:
+            reason = '-'
+        self.reason = reason
+        self.name = history_records[3]

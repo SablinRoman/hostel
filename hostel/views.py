@@ -3,8 +3,9 @@ import logging
 from .models import Student
 from .models import Room
 from .models import CardsFilter
+from .models import StudentHistory
 from .service.stat import Statistics
-from .models import get_evicted_students
+from .models import get_evicted_students_from_db
 from forms import StudentForm
 from forms import RoomForm
 from forms import FiltersForm
@@ -200,20 +201,12 @@ class CheckInStudentUpdate(View):
 
 class GetEvictedStudents(View):
     def get(self, request):
-        records = get_evicted_students()
-        result_list = list()
+        records = get_evicted_students_from_db()
+        students_list = []
 
-        for student_history in records:
-            reason = student_history[2]
-            if not reason:
-                reason = ''
-
-            result_list.append({
-                "room": student_history[0],
-                "date": student_history[1].strftime('%d-%m-%Y'),
-                "reason": reason,
-                "name": student_history[3],
-            })
+        for record in records:
+            students_list.append(StudentHistory(record))
+            logging.info(students_list)
 
         return render(request, 'hostel/evicted_student.html',
-                      context={'result_dict': result_list})
+                      context={'students_list': students_list})

@@ -4,8 +4,13 @@
 
     <h4>Выселенные студенты:</h4>
 
-    {% for student in result_list %}
-        <p>{{ student }}</p>
+    {% for student in students_list %}
+        <p>
+            <strong>Комната: </strong>{{ student.room }};&nbsp;
+            <strong>Дата выселения: </strong>{{ student.date }};&nbsp;
+            <strong>Причина: </strong>{{ student.reason }}
+        </p>
+        <p>{{ student.name }}</p>
     {% endfor %}
 
 {% endblock %}
