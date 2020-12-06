@@ -4,7 +4,8 @@ from .models import Student
 from .models import Room
 from .models import CardsFilter
 from .models import StudentHistory
-from .service.stat import Statistics
+from .service import stat
+from .service.exel_work import import_rooms, import_students_data
 from .models import get_evicted_students_from_db
 from forms import StudentForm
 from forms import RoomForm
@@ -22,26 +23,24 @@ logger = logging.getLogger(__name__)
 
 
 def number_of(request):
-    residents = Statistics.num_of_residents
-    male_places = Statistics.male_places
-    female_places = Statistics.female_places
-    save_places = Statistics.save_places
-    empty_places = Statistics.empty_places
 
-    county = Statistics.citizenship_sort()
-    faculty = Statistics.faculty_sort()
-    form = Statistics.form_studies_sort()
-    reg = Statistics.registration_sort()
+    logging.info('Create statistics...')
+    # residents = stat.Statistics.number_of_residents
+    # male_places = stat.Statistics.male_places
+    # female_places = stat.Statistics.female_places
+    # save_places = stat.Statistics.save_places
+    # empty_places = stat.Statistics.empty_places
+    #
+    # county = stat.Statistics.citizenship_sort()
+    # faculty = stat.Statistics.faculty_sort()
+    # form = stat.Statistics.form_studies_sort()
+    # reg = stat.Statistics.registration_sort()
 
-    return render(request, 'hostel/index.html', context={'residents': residents,
-                                                         'male_places': male_places,
-                                                         'female_places': female_places,
-                                                         'save_places': save_places,
-                                                         'empty_places': empty_places,
-                                                         'country': county,
-                                                         'faculty': faculty,
-                                                         'form': form,
-                                                         'reg': reg, })
+    hostel_stat = stat.Statistics()
+    hostel_stat.CreateStatistic()
+    logging.info(f'ALL COUNT {hostel_stat.number_of_residents}')
+    logging.info(f'Male {hostel_stat.male_places}')
+    return render(request, 'hostel/index.html', context={'hostel_stat': hostel_stat})
 
 
 class AddRoom(View):
