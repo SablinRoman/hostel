@@ -6,7 +6,7 @@ run:
 	@python3 manage.py runserver
 
 import:
-	@python3 /home/roman/hostel/hostel/service/exel_work.py
+	@python3 $$(pwd)/hostel/service/exel_work.py
 
 mm:
 	@python3 manage.py makemigrations

@@ -1,26 +1,17 @@
 import os
-import sys
 import logging
 
 import django
 import openpyxl
 
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'engine.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hostel')
+django.setup()
+from hostel.models import Room
+from hostel.models import Student
+
 wb = openpyxl.load_workbook('./Baza.xlsx')
 SHEET = wb['Проживающие']
-
-# project_dir = "/home/roman/hostel/engine"  # Путь до файла settings
-# sys.path.append(project_dir)
-project_dir = '/home/roman/hostel'
-sys.path.append(project_dir)
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'engine.settings')  # Добавление переменной окуружения
-django.setup()
-
-project_dir = '/home/roman/hostel'
-sys.path.append(project_dir)
-
-from hostel.models import Student  # Примечание: импорт не работает, если находться на верху
-from hostel.models import Room  # Примечание: импорт не работает, если находться на верху
-
 STATUS_LIST = ('Мужское', 'Женское', 'Пусто', 'Занято')
 
 
@@ -28,7 +19,7 @@ def get_cell_data(row, column):
     data = SHEET.cell(row=row, column=column).value
     return data
 
-
+#
 def import_rooms(row_number=2):
     # TODO delete input
     logging.info('Importing rooms...')
