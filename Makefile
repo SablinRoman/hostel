@@ -19,4 +19,3 @@ full_del_db:
 	@find $$(pwd)/hostel/migrations/* ! -name "__init__.py" -delete
 
 
-

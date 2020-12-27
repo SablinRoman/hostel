@@ -1,11 +1,11 @@
 {% extends 'hostel/base_cards.html' %}
 
-{% block cards %}
+{% block student_card %}
 
 <div class="col-sm-6">
-    <div class="card">
+    <div class="card text-white bg-primary mb-3">
         <div class="card-body">
-            <h5 class="card-title">{{ room.room_numb }}</h5>
+            <h5 class="card-title">{{room.room_numb }}</h5>
 
             {% for student in room.students.all %}
             <p>

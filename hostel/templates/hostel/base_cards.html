@@ -17,17 +17,15 @@
 
     {% for twin_room in hostel_rooms %}
 
-    <div class="row">
-        {% for room in twin_room %}
+        <div class="row">
+            {% for room in twin_room %}
 
-        {%block cards%}
-        {% endblock %}
+                {%block student_card%}
+                {% endblock %}
 
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
     {% endfor %}
-
-
 
 </form>
 {% endblock %}

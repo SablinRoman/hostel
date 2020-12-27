@@ -106,7 +106,7 @@ class Cards(View):
                 hostel_rooms.append(twin_rooms)
                 twin_rooms = []
         hostel_rooms.append(twin_rooms)
-        return render(request, 'hostel/cards.html', context={'form': bound_form,
+        return render(request, 'hostel/student_card.html', context={'form': bound_form,
                                                              'hostel_rooms': hostel_rooms})
 
     def post(self, request):
@@ -140,7 +140,7 @@ def student_check_out(request, id):
 
     # Ошибка с выставлением пола
     if gender_dict['М'] > 0 and gender_dict['Ж'] > 0:
-        pass
+        raise logging.info('Different gender in Room!!!')
 
     else:
         # Добавление одного свободного места после выселения
