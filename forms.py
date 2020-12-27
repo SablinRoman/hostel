@@ -82,7 +82,7 @@ class StudentForm(forms.ModelForm):
 
     def clean_mobile_number(self):
         new_number = self.cleaned_data['mobile_number']
-        #  Проверна на наличие буквенных символов не отрабатывает
+        #  TODO Проверна на наличие буквенных символов не отрабатывает
         if new_number is not None:
             if not str(new_number).isdigit():
                 raise ValidationError('Номер телефона  может содеражать только цифры!')
@@ -106,12 +106,11 @@ class FiltersForm(forms.ModelForm):
         model = CardsFilter
         fields = ['all', 'men', 'women', 'free', 'busy']
 
-        widgets = {'all': forms.CheckboxInput(attrs={'class': 'form-control'}),
-                   'men': forms.CheckboxInput(attrs={'class': 'form-control'}),
-                   'women': forms.CheckboxInput(attrs={'class': 'form-control'}),
-                   'free': forms.CheckboxInput(attrs={'class': 'form-control'}),
-                   'busy': forms.CheckboxInput(attrs={'class': 'form-control'}),
-                   }
+        widgets = {'all': forms.CheckboxInput(),
+                   'men': forms.CheckboxInput(),
+                   'women': forms.CheckboxInput(),
+                   'free': forms.CheckboxInput(),
+                   'busy': forms.CheckboxInput()}
 
     def clean(self):
         logging.info(f'Cleaned data from cards filter - {self.cleaned_data}')
@@ -128,3 +127,6 @@ class FiltersForm(forms.ModelForm):
             CardsFilter.objects.filter(id=1).update(free=self.cleaned_data['free'])
             CardsFilter.objects.filter(id=1).update(busy=self.cleaned_data['busy'])
             logging.info(CardsFilter.objects.first())
+
+
+# class CardsFilterForm(forms.Form)

@@ -12,7 +12,7 @@
 
     {% for field in form %}
     <div class="from-group">
-        {{ field.label }}
+        <p>Введите номер комнаты:</p>
         {{ field }}
 
         {% if field.errors %}
@@ -23,6 +23,6 @@
     </div>
     {% endfor %}
 
-    <button type="submit" class="btn btn-primary">Add</button>
+    <button type="submit" class="btn btn-primary">Добавить комнату</button>
 </form>
 {% endblock %}

@@ -1,15 +1,9 @@
 import logging
 
-from .models import Student
-from .models import Room
-from .models import CardsFilter
-from .models import StudentHistory
+from .models import Student, Room, CardsFilter, StudentHistory
 from .service import stat
-from .service.exel_work import import_rooms, import_students_data
-from .models import get_evicted_students_from_db
-from forms import StudentForm
-from forms import RoomForm
-from forms import FiltersForm
+from .models import get_evicted_students_from_db, empty_student_data
+from forms import StudentForm, RoomForm, FiltersForm
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import View
@@ -25,16 +19,6 @@ logger = logging.getLogger(__name__)
 def number_of(request):
 
     logging.info('Create statistics...')
-    # residents = stat.Statistics.number_of_residents
-    # male_places = stat.Statistics.male_places
-    # female_places = stat.Statistics.female_places
-    # save_places = stat.Statistics.save_places
-    # empty_places = stat.Statistics.empty_places
-    #
-    # county = stat.Statistics.citizenship_sort()
-    # faculty = stat.Statistics.faculty_sort()
-    # form = stat.Statistics.form_studies_sort()
-    # reg = stat.Statistics.registration_sort()
 
     hostel_stat = stat.Statistics()
     hostel_stat.CreateStatistic()
@@ -60,7 +44,6 @@ class AddRoom(View):
 class Cards(View):
     def get(self, request):
         cards_filter = None
-
         if CardsFilter.objects.all().exists():
             cards_filter = CardsFilter.objects.first()
             logging.info('DataBase have cards filter...')
@@ -209,3 +192,12 @@ class GetEvictedStudents(View):
 
         return render(request, 'hostel/evicted_student.html',
                       context={'students_list': students_list})
+
+
+
+
+
+
+
+
+
