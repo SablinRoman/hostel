@@ -4,7 +4,6 @@ from django import forms
 from hostel.models import Student
 from hostel.models import Room
 from hostel.models import CardsFilter
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.exceptions import ValidationError
 
 # TODO
@@ -82,7 +81,6 @@ class StudentForm(forms.ModelForm):
 
     def clean_mobile_number(self):
         new_number = self.cleaned_data['mobile_number']
-        #  TODO Проверна на наличие буквенных символов не отрабатывает
         if new_number is not None:
             if not str(new_number).isdigit():
                 raise ValidationError('Номер телефона  может содеражать только цифры!')
@@ -127,6 +125,3 @@ class FiltersForm(forms.ModelForm):
             CardsFilter.objects.filter(id=1).update(free=self.cleaned_data['free'])
             CardsFilter.objects.filter(id=1).update(busy=self.cleaned_data['busy'])
             logging.info(CardsFilter.objects.first())
-
-
-# class CardsFilterForm(forms.Form)

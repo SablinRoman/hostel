@@ -1,10 +1,15 @@
 import os
+import sys
 import logging
 
 import django
 import openpyxl
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'engine.settings')
+project_dir = "/home/rsablin/hostel/engine"
+sys.path.append(project_dir)
+project_dir = "/home/rsablin/hostel"
+sys.path.append(project_dir)
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hostel')
 django.setup()
 from hostel.models import Room
@@ -19,9 +24,8 @@ def get_cell_data(row, column):
     data = SHEET.cell(row=row, column=column).value
     return data
 
-#
+
 def import_rooms(row_number=2):
-    # TODO delete input
     logging.info('Importing rooms...')
 
     while get_cell_data(row_number, 1) is not None:
@@ -42,9 +46,9 @@ def check_to_empty(row, column):
         return True
 
 
-# TODO Обязательно добавить нормализацию данных
+# TODO Normalize Data
 def import_students_data(row_number=2):
-    # TODO delete input
+
     if not row_number:
         row_number = int(input("Start row ="))
 
